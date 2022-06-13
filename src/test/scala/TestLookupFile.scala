@@ -1,12 +1,12 @@
 import org.scalatest.funsuite.AnyFunSuite
 
-class TestFile extends AnyFunSuite {
+class TestLookupFile extends AnyFunSuite {
 
   test("A single word returns a 100 match") {
     val trieRoot = TrieRoot[Char]()
     trieRoot.insert("cat".toList)
 
-    val file = File(name = "Test File", contents = trieRoot)
+    val file = LookupFile(name = "Test File", contents = trieRoot)
 
     assert(file.searchRank(List("cat")) === 100)
   }
@@ -16,7 +16,7 @@ class TestFile extends AnyFunSuite {
     trieRoot.insert("cat".toList)
     trieRoot.insert("car".toList)
 
-    val file = File(name = "Test File", contents = trieRoot)
+    val file = LookupFile(name = "Test File", contents = trieRoot)
 
     assert(file.searchRank(List("cat", "hat")) === 50)
   }
@@ -25,9 +25,8 @@ class TestFile extends AnyFunSuite {
     val trieRoot = TrieRoot[Char]()
     trieRoot.insert("cat".toList)
 
-    val file = File(name = "Test File", contents = trieRoot)
+    val file = LookupFile(name = "Test File", contents = trieRoot)
 
     assert(file.searchRank(List("cat", "hat", "mat")) === 33)
   }
-
 }

@@ -1,8 +1,9 @@
-
-case class File(name: String, contents: Trie[Char]) {
+case class LookupFile(name: String, contents: Trie[Char]) {
 
   /**
-   * Determine the rank [0, 100] for which a file has wrt the query
+   * Determine the rank [0, 100] for which a file has wrt the query.
+   * The rank is determined as essentially a percentage of words contained.
+   *
    * @param query The word to be searched for
    * @return The rank of the file
    */
