@@ -1,4 +1,4 @@
-case class LookupFile(name: String, contents: Trie[Char]) {
+case class FileSummary(name: String, contents: Trie[Char]) {
 
   /**
    * Determine the rank [0, 100] for which a file has wrt the query.
