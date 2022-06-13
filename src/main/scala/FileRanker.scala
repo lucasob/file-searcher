@@ -8,6 +8,6 @@ object FileRanker {
    * @return The tries ordered by their search rank
    */
   def summariesBySearchRank(summaries: List[FileSummary], query: List[String], top: Int): List[(String, Int)] =
-    summaries.map(summary => (summary.name, summary.searchRank(query))).sortBy(_._1).take(top)
+    summaries.map(summary => (summary.name, summary.searchRank(query))).sortBy(_._2)(Ordering.Int.reverse).take(top)
 
 }

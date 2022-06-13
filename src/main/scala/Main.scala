@@ -1,29 +1,30 @@
+import scala.annotation.tailrec
+import scala.io.StdIn.readLine
+
+object Main{
+
+  @tailrec def iterate(summaries: List[FileSummary]): Unit = {
+    val search = readLine("search: ")
+    search match {
+      case "quit" => System.exit(0)
+      case _ =>
+        FileRanker
+          .summariesBySearchRank(summaries = summaries, query = search.split(" ").toList, top = 10)
+          .map(summary => s"${summary._1}: ${summary._2}%")
+          .foreach(result => println(result))
+    }
+
+    iterate(summaries)
+  }
 
 
-//def getFilesForDirectory: List[FileSummary] = {
-//  println("Enter absolute path of directory: ")
-//  val directory = readLine()
-//  val trieLoader = FileTrieLoader()
-//  trieLoader.tries(trieLoader.getFiles(directory))
-//}
-//
-//def getQueryTerms: String = {
-//  println("Search terms: ")
-//  val terms = readLine()
-//  terms
-//}
-//
-//@tailrec def iterate(tries: List[FileSummary]): Unit = {
-//  val search = getQueryTerms
-//  search match {
-//    case "quit" => System.exit(0)
-//    case _ => println(FileTrieLoader().triesBySearchRank(tries = tries, query = search.split(" ").toList, top = 10))
-//  }
-//
-//  iterate(tries)
-//}
-
-object Main extends App {
-//  iterate(getFilesForDirectory)
-  println("Hello, world")
+  def main(args: Array[String]): Unit = {
+    args.headOption match {
+      case Some(directory) => Loader.getFiles(directory) match {
+        case Some(files) => iterate(SummaryBuilder.filesToSummaries(files))
+        case None => println("Hey that directory is no good")
+      }
+      case None => println("Usage: runMain Main <absolute/directory/path>")
+    }
+  }
 }

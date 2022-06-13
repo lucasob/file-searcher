@@ -17,11 +17,11 @@ class TestFileRanker extends AnyFunSuite {
   test("FileTrieLoader can order two single-word tries by search rank") {
     val ordered = FileRanker.summariesBySearchRank(
       summaries = List(FileSummary("cat.txt", catTrie()), FileSummary("dog.txt", dogTrie())),
-      query = List("cat"),
+      query = List("dog"),
       top = 2
     )
 
-    val expected = List(("cat.txt", 100), ("dog.txt", 0))
+    val expected = List(("dog.txt", 100), ("cat.txt", 0))
 
     assert(ordered === expected)
   }
