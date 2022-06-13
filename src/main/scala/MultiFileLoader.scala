@@ -1,5 +1,6 @@
 import java.io.File
 import scala.io.Source
+import scala.util.{Failure, Success, Using}
 
 trait MultiFileLoader {
 
@@ -11,7 +12,18 @@ trait MultiFileLoader {
 case class FileTrieLoader() extends MultiFileLoader {
 
   private def toLookupFile(file: File): LookupFile = {
-    val words = Source.fromFile(file).bufferedReader().readLine().split(" ").toList
+    val fileContents = Using(Source.fromFile(file)) { source => source.mkString}
+    val words = fileContents match {
+      case Failure(_) => List.empty[String]
+      case Success(value) =>
+        value
+          .split("\n")
+          .flatMap(line => line.split(" "))
+          .map(word => word.toList.filter(_.isLetter).mkString)
+          .filter(!_.isBlank)
+          .filter(word => word.toLowerCase.toList.forall(_.isLetter))
+          .toList
+    }
 
     // TODO -> Trie becomes immutable such that this can be stateless
     val trie = TrieRoot[Char]()
