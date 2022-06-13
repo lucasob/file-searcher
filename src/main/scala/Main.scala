@@ -6,7 +6,7 @@ object Main{
   @tailrec def iterate(summaries: List[FileSummary]): Unit = {
     val search = readLine("search: ")
     search match {
-      case "quit" => System.exit(0)
+      case ":quit" => System.exit(0)
       case _ =>
         FileRanker
           .summariesBySearchRank(summaries = summaries, query = search.split(" ").toList, top = 10)
